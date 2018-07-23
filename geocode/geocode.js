@@ -2,7 +2,7 @@ const request = require('request');
 
 const apiKey = 'AIzaSyDn8HmlTO9Jjwh_sVLRosqR1LoYOaCswW4';
 
-const geocodeAddress = addr => {
+let geocodeAddress = addr => {
   return new Promise((resolve, reject) => {
     request(
       {
