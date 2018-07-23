@@ -2,7 +2,7 @@ const request = require('request');
 
 const apiKey = 'AIzaSyDn8HmlTO9Jjwh_sVLRosqR1LoYOaCswW4';
 
-const geocodeAddress = (addr) => {
+const geocodeAddress = (addr, callback) => {
   request(
     {
       url: [
@@ -15,13 +15,15 @@ const geocodeAddress = (addr) => {
     },
     (error, resp, body) => {
       if (error) {
-        console.log('Unable to connect to the server');
+        callback('Unable to connect to the server');
       } else if (body.status === 'ZERO_RESULTS') {
-        console.log('Unable to find that address');
+        callback('Unable to find that address');
       } else if (body.status === 'OK') {
-        console.log('Address:', body.results[0].formatted_address);
-        console.log('Longitude: ', body.results[0].geometry.location.lng);
-        console.log('Latitude: ', body.results[0].geometry.location.lat);
+        callback(undefined , {
+          address : body.results[0].formatted_address,
+          latitude: body.results[0].geometry.location.lat,
+          longitude: body.results[0].geometry.location.lng,
+        });
       }
     }
   );
